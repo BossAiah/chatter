@@ -1,50 +1,53 @@
+// 🔥 PASTE YOUR CONFIG HERE
+const firebaseConfig = {
+  apiKey: "YOUR_KEY",
+  authDomain: "YOUR_DOMAIN",
+  databaseURL: "YOUR_DB_URL",
+  projectId: "YOUR_ID"
+};
+
+firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
+
 const user = localStorage.getItem("chatUser");
-const repo = "drqg"; // your repo
-const file = "messages.json";
+const msgBox = document.getElementById("messages");
 
-async function fetchMessages() {
-  const res = await fetch(`https://raw.githubusercontent.com/YOUR_USERNAME/${repo}/main/${file}?t=${Date.now()}`);
-  return await res.json();
-}
+// 🔁 Listen for live messages
+db.ref("messages").on("value", snapshot => {
+  const data = snapshot.val() || {};
+  msgBox.innerHTML = "";
 
-async function render() {
-  const data = await fetchMessages();
   const now = Date.now();
 
-  const valid = data.filter(m => now - m.time < 60000);
+  Object.entries(data).forEach(([id, m]) => {
 
-  const box = document.getElementById("messages");
-  box.innerHTML = "";
+    // ⏱ Auto delete after 1 min
+    if (now - m.time > 60000) {
+      db.ref("messages/" + id).remove();
+      return;
+    }
 
-  valid.forEach(m => {
     const div = document.createElement("div");
     div.className = "msg " + (m.user === user ? "self" : "");
-    div.innerText = m.user + ": " + m.text;
-    box.appendChild(div);
+    div.textContent = m.user + ": " + m.text;
+
+    msgBox.appendChild(div);
   });
 
-  box.scrollTop = box.scrollHeight;
-}
+  msgBox.scrollTop = msgBox.scrollHeight;
+});
 
-async function sendMessage() {
-  const input = document.getElementById("msgInput");
-  const text = input.value;
-
+// 📤 Send message
+function send() {
+  const input = document.getElementById("msg");
+  const text = input.value.trim();
   if (!text) return;
 
-  const data = await fetchMessages();
-
-  data.push({
+  db.ref("messages").push({
     user: user,
     text: text,
     time: Date.now()
   });
 
-  // ⚠️ GitHub can't be written directly from frontend
-  alert("To fully work, you need GitHub API or a small backend.\nThis demo only reads.");
-  
   input.value = "";
 }
-
-setInterval(render, 2000);
-render();
