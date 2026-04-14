@@ -10,11 +10,16 @@
   <div id="messages"></div>
 
   <div class="input-box">
-    <input type="text" id="msgInput" placeholder="Type message...">
-    <button onclick="sendMessage()">Send</button>
+    <input id="msg" placeholder="Type message...">
+    <button onclick="send()">Send</button>
   </div>
 </div>
 
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js"></script>
+
 <script src="app.js"></script>
+
 </body>
 </html>
