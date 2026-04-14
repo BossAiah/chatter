@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Login</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="dark">
+  <div class="login-box">
+    <h2>Secure Chat</h2>
+    <input type="text" id="username" placeholder="Username">
+    <input type="password" id="password" placeholder="Password">
+    <button onclick="login()">Enter</button>
+  </div>
+
+<script>
+function login() {
+  const u = document.getElementById("username").value;
+  const p = document.getElementById("password").value;
+
+  if ((u === "User27" || u === "User09") && p === "thewayyou") {
+    localStorage.setItem("chatUser", u);
+    window.location.href = "chat.html";
+  } else {
+    alert("Wrong credentials");
+  }
+}
+</script>
+</body>
+</html>
