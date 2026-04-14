@@ -1,31 +1,32 @@
 body.dark {
-  background: #0f0f0f;
+  background: #0d0d0d;
   color: #fff;
   font-family: Arial;
 }
 
 .login-box {
-  width: 300px;
+  width: 280px;
   margin: 150px auto;
   text-align: center;
 }
 
 input {
   width: 100%;
-  padding: 10px;
-  margin: 5px 0;
+  padding: 12px;
+  margin: 6px 0;
   background: #1a1a1a;
   border: none;
-  color: white;
+  color: #fff;
+  border-radius: 6px;
 }
 
 button {
   width: 100%;
-  padding: 10px;
-  background: #2ecc71;
+  padding: 12px;
+  background: #00ff9c;
   border: none;
-  color: black;
   cursor: pointer;
+  border-radius: 6px;
 }
 
 .chat-container {
@@ -44,18 +45,27 @@ button {
 }
 
 .msg {
-  background: #1e1e1e;
   padding: 10px;
   margin: 5px;
   border-radius: 8px;
+  background: #1e1e1e;
+  max-width: 70%;
 }
 
 .self {
-  background: #2ecc71;
+  background: #00ff9c;
   color: black;
   align-self: flex-end;
 }
 
 .input-box {
   display: flex;
+}
+
+.input-box input {
+  flex: 1;
+}
+
+.input-box button {
+  width: 100px;
 }
